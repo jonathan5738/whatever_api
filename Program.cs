@@ -7,6 +7,17 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+var allowedUrl = builder.Configuration.GetValue<string>("ClientUrl");
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "allowOrigins", policy =>
+    {
+        policy.WithOrigins(allowedUrl)
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+    });
+});
+
 var connectionString = builder.Configuration.GetConnectionString("DbUrl");
 builder.Services.AddDbContext<AppDbContext>(options => options
   .UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
@@ -25,6 +36,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseCors("allowOrigins");
 
 app.UseHttpsRedirection();
 
