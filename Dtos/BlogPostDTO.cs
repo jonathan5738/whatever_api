@@ -18,4 +18,7 @@ public class BlogPostDTO
     public string ExcerptBody { get; set; } = default!;
     [Required]
     public int DepartmentId { get; set; }
+
+    [Required]
+    public bool IsFeaturedPost {get; set;}
 }

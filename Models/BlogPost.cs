@@ -26,6 +26,9 @@ public class BlogPost
     [Required]
     public string Author { get; set; } = default!;
 
+    [Required]
+    public bool IsFeaturedPost {get; set;}
+
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public DateTime CreatedAt { get; set; }
 

@@ -49,6 +49,7 @@ public class BlogPostService: IBlogPostService
         blogPost.Department = department;
         blogPost.ExcerptTitle = data.ExcerptTitle;
         blogPost.ExcerptBody = data.ExcerptBody;
+        blogPost.IsFeaturedPost = data.IsFeaturedPost;
         
         var uri = await fileUploader.UploadFileAsync(data.ExcerptImage);
         blogPost.ExcerptImage = uri;
