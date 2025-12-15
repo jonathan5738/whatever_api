@@ -25,6 +25,14 @@ public class BlogPostController: ControllerBase
         var data = await this.blogPostService.FindAll(page, pageSize);
         return Ok(data);
     }
+
+    [HttpGet]
+    [Route("/api/[controller]/FeaturedPosts")]
+    public async Task<ActionResult<List<BlogPostPagination>>> GetFeaturedPosts(int page = 1, int pageSize = 3)
+    {
+        var featuredPosts = await this.blogPostService.FindFeaturedPosts(page, pageSize);
+        return Ok(featuredPosts);
+    }
     [HttpGet("{id}")]
     public async Task<ActionResult<BlogPost>> Get([FromRoute] int id)
     {

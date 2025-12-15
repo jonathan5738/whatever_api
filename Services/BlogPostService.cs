@@ -43,6 +43,29 @@ public class BlogPostService: IBlogPostService
         return foundBlogPost;
     }
 
+    public async Task<BlogPostPagination> FindFeaturedPosts(int page = 1, int pageSize = 3)
+    {
+        
+        var totalCount = await this._context.BlogPost.CountAsync();
+        var totalPages = (int)Math.Ceiling((decimal)totalCount / pageSize);
+        var blogPosts = await this._context
+            .BlogPost
+            .Where(p => p.IsFeaturedPost == true)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Include(b => b.Department)
+            .OrderByDescending(b => b.CreatedAt)
+            .ToListAsync();
+        var data = new BlogPostPagination
+        {
+            Data = blogPosts,
+            TotalPage = totalPages,
+            HasNext = page < totalPages,
+            HasPrev = page > 1
+        };
+        return data;
+    }
+
     public async  Task Create(Department department, BlogPostDTO data)
     {
         var blogPost = new BlogPost { Content = data.Content, Author = data.Author };
