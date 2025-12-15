@@ -38,6 +38,27 @@ public class DepartmentService: IDepartmentService
         };
         return data;
     }
+
+    public async Task<List<PostsByDepartmentDTO>> FindPostsByDepartment()
+    {
+        var data = await this._context.Department
+            .Include(d => d.Posts)
+            .Select(d => new PostsByDepartmentDTO
+            {
+                Id = d.Id,
+                Name = d.Name,
+                Posts = d.Posts.Select(p => new PostExcerpt
+                {
+                    Id = p.Id,
+                    ExcerptTitle = p.ExcerptTitle,
+                    ExcerptBody = p.ExcerptBody,
+                    ExcerptImage = p.ExcerptImage,
+                    Author = p.Author
+                }).ToList()
+            })
+            .ToListAsync();
+        return data;
+    }
     public async Task<Department?> FindOne(int id)
     {
         var department = await this._context.Department

@@ -14,4 +14,6 @@ public interface IDepartmentService
 
     public Task Delete(Department department);
 
+    public Task<List<PostsByDepartmentDTO>> FindPostsByDepartment();
+
 }

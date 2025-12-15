@@ -25,7 +25,16 @@ public class DepartmentController: ControllerBase
         return Ok(departments);
     }
 
+    [HttpGet]
+    [Route("/api/[controller]/posts")]
+    public async Task<ActionResult<List<PostsByDepartmentDTO>>> GetPosts()
+    {
+        var posts = await this.departmentService.FindPostsByDepartment();
+        return Ok(posts);
+    }
+
     [HttpGet("{id}")]
+
     public async Task<ActionResult<Department>> Get([FromRoute] int id)
     {
         var department = await this.departmentService.FindOne(id);

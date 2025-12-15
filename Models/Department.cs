@@ -21,4 +21,6 @@ public class Department
 
     public ICollection<Doctor> Doctors { get; set; } = default!;
 
+    public ICollection<BlogPost> Posts {get; set;} = default!;
+
 }
