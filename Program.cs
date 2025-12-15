@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using CliniqueBackend.Data;
 using CliniqueBackend.Services;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,12 @@ builder.Services.AddControllers();
 
 var allowedUrl = builder.Configuration.GetValue<string>("ClientUrl");
 var developmentUrl = builder.Configuration.GetValue<string>("DevelopmentClientUrl");
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions
+      .ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "allowOrigins", policy =>

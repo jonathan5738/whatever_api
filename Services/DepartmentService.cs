@@ -14,7 +14,10 @@ public class DepartmentService: IDepartmentService
     }
     public async Task<List<Department>> FindAll()
     {
-        return await this._context.Department.ToListAsync();
+        return await this._context.Department
+            .Include(department => department.Doctors)
+            .ThenInclude(doctor => doctor.Schedules)
+            .ToListAsync();
     }
     public async Task<DepartmentPagination> FindAll(int page = 1, int pageSize = 3)
     {
