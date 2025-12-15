@@ -8,11 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 var allowedUrl = builder.Configuration.GetValue<string>("ClientUrl");
+var developmentUrl = builder.Configuration.GetValue<string>("DevelopmentClientUrl");
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "allowOrigins", policy =>
     {
-        policy.WithOrigins(allowedUrl)
+        policy.WithOrigins(allowedUrl, developmentUrl)
           .AllowAnyHeader()
           .AllowAnyMethod();
     });
