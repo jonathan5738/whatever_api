@@ -6,6 +6,7 @@ namespace CliniqueBackend.Services;
 public interface IBlogPostService
 {
     public Task<BlogPostPagination> FindAll(int page, int pageSize);
+    public Task<List<PostExcerpt>> FindOrderedPosts();
     public Task<BlogPost?> FindOne(int id);
     public Task<BlogPostPagination> FindFeaturedPosts(int page, int pageSize);
     public Task Create(Department department, BlogPostDTO data);

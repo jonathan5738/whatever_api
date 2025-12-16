@@ -36,6 +36,23 @@ public class BlogPostService: IBlogPostService
         return data;
     }
 
+    public async Task<List<PostExcerpt>> FindOrderedPosts()
+    {
+        return await this._context.BlogPost
+        .OrderByDescending(p => p.CreatedAt)
+        .Take(6)
+        .Include(p => p.Department)
+        .Select(p => new PostExcerpt
+        {
+            Id = p.Id,
+            DepartmentName = p.Department.Name,
+            ExcerptTitle = p.ExcerptTitle,
+            ExcerptBody = p.ExcerptBody,
+            ExcerptImage = p.ExcerptImage,
+            Author = p.Author
+        })
+        .ToListAsync();
+    }
     public async Task<BlogPost?> FindOne(int id)
     {
         var foundBlogPost = await this._context.BlogPost

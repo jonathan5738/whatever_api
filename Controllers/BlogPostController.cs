@@ -44,6 +44,13 @@ public class BlogPostController: ControllerBase
         return Ok(foundBlogPost);
     }
 
+    [HttpGet]
+    [Route("/api/[controller]/Posts/Ordered")]
+    public async Task<ActionResult<List<PostExcerpt>>> GetOrderedPosts()
+    {
+        var posts = await this.blogPostService.FindOrderedPosts();
+        return Ok(posts);
+    }
     [HttpPost]
     public async Task<ActionResult> Post([FromForm] BlogPostDTO data)
     {
