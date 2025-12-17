@@ -47,7 +47,7 @@ public class DepartmentService: IDepartmentService
             {
                 Id = d.Id,
                 Name = d.Name,
-                Posts = d.Posts.Select(p => new PostExcerpt
+                Posts = d.Posts.OrderByDescending(p => p.CreatedAt).Select(p => new PostExcerpt
                 {
                     Id = p.Id,
                     ExcerptTitle = p.ExcerptTitle,
